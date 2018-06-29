@@ -238,8 +238,8 @@ Creates and returns an instance of an IPFS node. Use the `options` argument to s
 
 - `libp2p` (object) add custom modules to the libp2p stack of your node
     - `modules` (object):
-        - `transport` (Array<[libp2p.Transport](https://github.com/libp2p/interface-transport)>): An array of additional Libp2p transport classes/instances to use. See [libp2p/interface-transport](https://github.com/libp2p/interface-transport) for details.
-        - `peerDiscovery` (Array<[libp2p.PeerDiscovery](https://github.com/libp2p/interface-peer-discovery)>): An array of additional Libp2p peer discovery classes/instances to use. See [libp2p/peer-discovery](https://github.com/libp2p/interface-peer-discovery) for details. If passing a class, configuration can be passed using the config section below under the key corresponding to you module's unique `tag` (a static property on the class)
+        - `transport` (Array<[libp2p.Transport](https://github.com/libp2p/interface-transport)>): An array of Libp2p transport classes/instances to use _instead_ of the defaults. See [libp2p/interface-transport](https://github.com/libp2p/interface-transport) for details.
+        - `peerDiscovery` (Array<[libp2p.PeerDiscovery](https://github.com/libp2p/interface-peer-discovery)>): An array of Libp2p peer discovery classes/instances to use _instead_ of the defaults. See [libp2p/peer-discovery](https://github.com/libp2p/interface-peer-discovery) for details. If passing a class, configuration can be passed using the config section below under the key corresponding to you module's unique `tag` (a static property on the class)
     - `config` (object):
         - `peerDiscovery` (object):
             - `[PeerDiscovery.tag]` (object): configuration for a peer discovery module
