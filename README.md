@@ -224,15 +224,16 @@ Creates and returns an instance of an IPFS node. Use the `options` argument to s
 
 - `pass` (string): A passphrase to encrypt/decrypt your keys.
 
+- `relay` (object): Configure circuit relay (see the [circuit relay tutorial](https://github.com/ipfs/js-ipfs/tree/master/examples/circuit-relaying) to learn more).
+    - `enabled` (boolean): Enable circuit relay dialer and listener. (Default: `false`)
+    - `hop` (object)
+        - `enabled` (boolean): Make this node a relay (other nodes can connect *through* it). (Default: `false`)
+        - `active` (boolean): Make this an *active* relay node. Active relay nodes will attempt to dial a destination peer even if that peer is not yet connected to the relay. (Default: `false`)
+
 - `EXPERIMENTAL` (object): Enable and configure experimental features.
     - `pubsub` (boolean): Enable libp2p pub-sub. (Default: `false`)
     - `sharding` (boolean): Enable directory sharding. Directories that have many child objects will be represented by multiple DAG nodes instead of just one. It can improve lookup performance when a directory has several thousand files or more. (Default: `false`)
     - `dht` (boolean): Enable KadDHT. **This is currently not interopable with `go-ipfs`.**
-    - `relay` (object): Configure circuit relay (see the [circuit relay tutorial](https://github.com/ipfs/js-ipfs/tree/master/examples/circuit-relaying) to learn more).
-        - `enabled` (boolean): Enable circuit relay dialer and listener. (Default: `false`)
-        - `hop` (object)
-            - `enabled` (boolean): Make this node a relay (other nodes can connect *through* it). (Default: `false`)
-            - `active` (boolean): Make this an *active* relay node. Active relay nodes will attempt to dial a destination peer even if that peer is not yet connected to the relay. (Default: `false`)
 
 - `config` (object) Modify the default IPFS node config. Find the Node.js defaults at [`src/core/runtime/config-nodejs.js`](https://github.com/ipfs/js-ipfs/tree/master/src/core/runtime/config-nodejs.js) and the browser defaults at [`src/core/runtime/config-browser.js`](https://github.com/ipfs/js-ipfs/tree/master/src/core/runtime/config-browser.js). This object will be *merged* with the default config; it will not replace it.
 

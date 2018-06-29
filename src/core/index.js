@@ -119,9 +119,6 @@ class IPFS extends EventEmitter {
     if (this._options.EXPERIMENTAL.dht) {
       this.log('EXPERIMENTAL Kademlia DHT is enabled')
     }
-    if (this._options.EXPERIMENTAL.relay) {
-      this.log('EXPERIMENTAL Relay is enabled')
-    }
 
     this.state = require('./state')(this)
 
