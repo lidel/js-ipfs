@@ -7,7 +7,7 @@ const Multiplex = require('libp2p-mplex')
 const SECIO = require('libp2p-secio')
 const Bootstrap = require('libp2p-railing')
 const libp2p = require('libp2p')
-const defaultsDeep = require('lodash.defaultsdeep')
+const defaultsDeep = require('@nodeutils/defaults-deep')
 
 class Node extends libp2p {
   constructor (_options) {
@@ -52,8 +52,7 @@ class Node extends libp2p {
       }
     }
 
-    defaultsDeep(_options, defaults)
-    super(_options)
+    super(defaultsDeep(_options, defaults))
   }
 }
 
