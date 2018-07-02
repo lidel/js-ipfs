@@ -46,8 +46,9 @@ function start () {
       repo: 'ipfs-' + Math.random(),
       config: {
         Addresses: {
-          Swarm: ['/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star']
-        }
+          Swarm: ['/dns4/star-signal.cloud.ipfs.team/tcp/443/wss/p2p-webrtc-star']
+        },
+        Bootstrap: [ ] // remove default bootstrap nodes to make webrtc example more clear
       }
     }
 
