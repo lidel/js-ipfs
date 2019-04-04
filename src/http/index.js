@@ -45,6 +45,7 @@ class HttpApi {
     this._options = options || {}
     this._log = debug('ipfs:http-api')
     this._log.error = debug('ipfs:http-api:error')
+    // this._daemon = Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]'
   }
 
   async start () {
@@ -67,10 +68,10 @@ class HttpApi {
     this._gatewayServers = await serverCreator(gatewayAddrs, this._createGatewayServer, ipfs)
 
     this._apiServers.forEach(apiServer => {
-      ipfs._print('API listening on %s', apiServer.info.ma)
+      ipfs._print('API listening on %s', apiServer.info.ma.toString())
     })
     this._gatewayServers.forEach(gatewayServer => {
-      ipfs._print('Gateway (read only) listening on %s', gatewayServer.info.ma)
+      ipfs._print('Gateway (read only) listening on %s', gatewayServer.info.ma.toString())
     })
     this._apiServers.forEach(apiServer => {
       ipfs._print('Web UI available at %s', toUri(apiServer.info.ma) + '/webui')
