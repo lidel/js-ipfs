@@ -30,6 +30,12 @@ function detectContentType (ref, chunk) {
   return mime.contentType(mimeType)
 }
 
+async function resolveIpns (ref, ipfs) {
+  const [ root ] = PathUtils.splitPath(ref)
+  const immutableRoot = await ipfs.name.resolve(root, { recursive: true })
+  return ref.replace(`/ipns/${root}`, PathUtils.removeTrailingSlash(immutableRoot))
+}
+
 // Enable streaming of compressed payload
 // https://github.com/hapijs/hapi/issues/3599
 class ResponseStream extends PassThrough {
@@ -62,9 +68,15 @@ module.exports = {
     const { ref } = request.pre.args
     const { ipfs } = request.server.app
 
+    // The resolver from ipfs-http-response supports only immutable /ipfs/ for now,
+    // so we convert /ipns/ to /ipfs/ before passing it to the resolver ¯\_(ツ)_/¯
+    // This can be removed if a solution proposed in
+    //  https://github.com/ipfs/js-ipfs-http-response/issues/22 lands upstream
+    const immutableRef = ref.startsWith('/ipns/') ? await resolveIpns(ref, ipfs) : ref
+
     let data
     try {
-      data = await resolver.cid(ipfs, ref)
+      data = await resolver.cid(ipfs, immutableRef)
     } catch (err) {
       const errorToString = err.toString()
       log.error('err: ', errorToString, ' fileName: ', err.fileName)
@@ -72,7 +84,7 @@ module.exports = {
       // switch case with true feels so wrong.
       switch (true) {
         case (errorToString === 'Error: This dag node is a directory'):
-          data = await resolver.directory(ipfs, ref, err.cid)
+          data = await resolver.directory(ipfs, immutableRef, err.cid)
 
           if (typeof data === 'string') {
             // no index file found
